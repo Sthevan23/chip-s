@@ -150,8 +150,7 @@
   var fontsP = (document.fonts && document.fonts.ready) ? document.fonts.ready.then(step) : (step(), Promise.resolve());
   var loadP = new Promise(function (r) { if (document.readyState === 'complete') r(); else window.addEventListener('load', r); }).then(step);
   var glP;
-  /* no celular e tablet o 3D é pesado demais: usa a versão leve (fotos, sem partes fixas) */
-  if (reduce || mobile || !window.WebGLRenderingContext || !GL) glP = Promise.resolve({ ok: false }).then(function (r) { step(); return r; });
+  if (reduce || !window.WebGLRenderingContext || !GL) glP = Promise.resolve({ ok: false }).then(function (r) { step(); return r; });
   else glP = GL.init({ canvas: $('#gl'), products: products, brand: S.brand, mobile: mobile, anchors: { crunch: $('#crunch-anchor'), flavor: $('#flv-anchor') } }).then(function (r) { step(); return r; });
 
   function finish(r) {
